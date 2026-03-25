@@ -8,6 +8,7 @@ import ErrorPage from "./components/ErrorPage";
 import Apps from "./Pages/Apps";
 import Installation from "./Pages/Installation";
 import AppDetails from "./Pages/AppDetails";
+import AppContextProvider from "./context/AppContextProvider";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AppContextProvider>
+      <RouterProvider router={router} />
+    </AppContextProvider>
   </React.StrictMode>,
 );
