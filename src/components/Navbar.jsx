@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { FaGithub } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { IoMenuSharp, IoClose } from "react-icons/io5";
 const Navbar = () => {
   const [show, setShow] = useState(false);
@@ -10,12 +10,12 @@ const Navbar = () => {
     <div>
       {/* large display */}
       <section className="max-w-7xl mx-auto flex justify-between items-center py-2 md:py-3 lg:py-4 px-2 lg:px-0">
-        <div className="flex justify-center items-center">
+        <Link to="/" className="flex justify-center items-center">
           <div>
             <img className="h-10" src={logo} alt="" />
           </div>
           <h1 className="text-[#6D36E5] font-semibold">HERO.IO</h1>
-        </div>
+        </Link>
 
         <div className="hidden lg:flex justify-center items-center gap-1 md:gap-2 lg:gap-5 font-semibold">
           <NavLink
@@ -70,8 +70,11 @@ const Navbar = () => {
       {/* small display */}
       {show && (
         <div className="lg:hidden fixed inset-0 bg-white z-50 px-5 py-6">
-          {/* TOP BAR */}
-          <div className="flex justify-between items-center mb-8">
+          <Link
+            to="/"
+            onClick={() => setShow(false)}
+            className="flex justify-between items-center mb-8"
+          >
             <h1 className="text-[#6D36E5] font-semibold text-lg">HERO.IO</h1>
 
             <div
@@ -80,9 +83,8 @@ const Navbar = () => {
             >
               <IoClose />
             </div>
-          </div>
+          </Link>
 
-          {/* ROUTES */}
           <div className="flex flex-col gap-6 text-lg font-semibold">
             <NavLink
               to="/"

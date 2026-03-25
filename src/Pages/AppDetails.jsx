@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import apps from "../../public/data.json";
 
 import {
@@ -14,17 +14,23 @@ import AppContext from "../context/AppContext";
 
 const AppDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { installedApps, setInstalledApps } = useContext(AppContext);
 
   const app = apps.find(a => a.id === Number(id));
 
-  if (!app) return <h2 className="text-center mt-10">App not found</h2>;
+  useEffect(() => {
+    if (!app) {
+      navigate("/error");
+    }
+  }, [app, navigate]);
+
+  if (!app) return null; // prevent crash
 
   const chartData = app.ratings.map(r => ({
     name: r.name,
     value: r.count,
   }));
-
   const handleInstall = () => {
     const exists = installedApps.find(a => a.id === app.id);
 
@@ -36,7 +42,7 @@ const AppDetails = () => {
   const isInstalled = installedApps.find(a => a.id === app.id);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-6 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start">
         <img
           src={app.image}
@@ -77,7 +83,7 @@ const AppDetails = () => {
             onClick={handleInstall}
             className="mt-4 bg-green-500 text-white px-6 py-2 rounded-lg cursor-pointer"
           >
-            {isInstalled ? "Installed" : `Install Now (${app.size} MB)`}
+            {isInstalled ? "Installed ✅" : `Install Now (${app.size} MB)`}
           </button>
         </div>
       </div>
